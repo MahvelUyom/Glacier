@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  
+  <style>
+    
+
+
+
+
+
+body {
+    
+}
+button{
+    margin:10px;
+    width:90px;
+    height:70px;
+    border-radius:20px;
+    background-color:black;
+    color:white;
+    font-weight:bolder;
+}
+#left{
+    float:left;
+}
+#right{
+    float:right;
+}
+#down{
+    position:fixed;
+    bottom:0;
+    margin-left:-48px;
+}
+canvas{
+    border-radius:30px;
+}
+  </style>
+</head>
+
+<body>
+  
+  
+    <div align="center">
+        <canvas id = "canvas"  width=350 height=500 style="background-color:yellow;">Browser doesn't support
+    </canvas><br/>
+        <button id ="up">UP</button><br/>
+        <button id ="left">LEFT</button>
+        <button id ="right">RIGHT</button><br/>
+        <button id ="down">DOWN</button>
+    </div>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var x = 125;
+        var y = 200;
+        let speed = 100;
+        var t = 0
+        var dir = 1
+        var coinx = Math.random() * (350-50);
+        var coiny = Math.random() * (500-50);
+        let score = 0
+                
+        function draw() {
+            context.clearRect(0,0,350,500);
+            context.beginPath();
+            context.font= "45px Arial";
+            context.fillStyle = "black";
+            context.fillText("Score: "+score, 20, 50);
+            
+            context.beginPath();
+            context.rect(x, y, 100, 100);
+            context.fillStyle = "red";
+            context.fill();
+            
+            context.beginPath();
+            context.rect(coinx, coiny, 50,50);
+            context.fillStyle = "#e3c228";
+            context.fill();
+            
+            //console.log(x)
+            if (coinx <= x+100 && coiny <= y+100 && x <= coinx+50 && y <= coiny+50){
+                score++
+                coinx = Math.random() * (350-50);
+                coiny = Math.random() * (500-50);
+                
+            }
+            
+            let up = document.getElementById('up');
+            let right = document.getElementById('right');
+            let left = document.getElementById('left');
+            let down = document.getElementById('down');
+            right.ontouchstart = function() {
+
+              dir = 1;
+
+            }
+
+            left.ontouchstart = function() {
+
+              dir = 2;
+
+            }
+
+            up.ontouchstart = function() {
+              dir = 3;
+            }
+
+            down.ontouchstart = function() {
+              dir = 4;
+            }
+    let time = 0.030
+            if (dir==1){
+                if (x+100<=350){
+                    x += dir*(speed*time);
+                };
+            }
+            else if (dir==2){
+                if (x>=0){
+                    x -= (dir-1)*(speed*time);
+                };
+            }
+            else if (dir==3){
+                if (y>=0){
+                    y -= (dir-2)*(speed*time);
+                }
+            }
+            else if (dir==4){
+                if (y+100<=500){
+                    y += (dir-3)*(speed*0.030);
+                };
+            }            window.requestAnimationFrame(draw);
+        }
+        draw()        
+    </script>
+
+
+
+</body>
+
+</html>
